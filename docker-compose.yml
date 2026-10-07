@@ -1,0 +1,8 @@
+services:
+  analisis_ventas:
+    build: .
+    container_name: analisis_ventas
+    
+    volumes:
+      - ./:/app
+    restart: unless-stopped
