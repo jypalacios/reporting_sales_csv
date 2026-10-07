@@ -19,7 +19,7 @@ print(ventas_por_mes)
 
 # 3. Determinar producto más vendido y con mayor ingresos
 datos['ingreso'] = datos['Units Sold'] * datos['Unit Price']
-ventas_prod = datos.groupby('Product Name').agg({'Units Sold': 'sum','ingreso': 'sum'})
+ventas_prod = datos.groupby('Item Type').agg({'Units Sold': 'sum','ingreso': 'sum'})
 mas_vendido = ventas_prod['Units Sold'].idxmax()
 mayor_ingreso = ventas_prod['ingreso'].idxmax()
 print(f"Producto más vendido en unidades: {mas_vendido} (total {ventas_prod.loc[mas_vendido, 'Units Sold']})")
@@ -31,7 +31,12 @@ plt.plot(ventas_por_mes.index, ventas_por_mes.values)
 plt.show()
 
 # 5. Graficar top 5 productos por ingresos
-top_5_productos = datos.groupby('Product Name')['ingreso'].sum().nlargest(5)
-print(top_5_productos)
-plt.bar(top_5_productos.index, top_5_productos.values)
+top5 = ventas_prod.nlargest(5, 'ingreso')
+plt.figure(figsize=(6,4))
+plt.bar(top5.index, top5['ingreso'])
+plt.title("Top 5 Productos por Ingresos")
+plt.ylabel("Ingresos (€)")
+plt.xlabel("Producto")
+plt.tight_layout()
+plt.savefig("top5_productos.png")
 plt.show()
