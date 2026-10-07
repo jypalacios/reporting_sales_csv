@@ -27,8 +27,16 @@ print(f"Producto con mayores ingresos: {mayor_ingreso} (total {ventas_prod.loc[m
 
 
 # 4. Graficar ventas por mes
-plt.plot(ventas_por_mes.index, ventas_por_mes.values)
+ventas_por_mes.index = ventas_por_mes.index.astype(str)
+plt.figure(figsize=(6,4))
+ventas_por_mes.plot(kind='bar')
+plt.title("Ventas por Mes")
+plt.xlabel("Mes")
+plt.ylabel("Ventas (€)")
+plt.tight_layout()
+plt.savefig("ventas_por_mes.png")
 plt.show()
+
 
 # 5. Graficar top 5 productos por ingresos
 top5 = ventas_prod.nlargest(5, 'ingreso')
